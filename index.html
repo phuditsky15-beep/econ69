@@ -21,7 +21,7 @@
             position: relative;
         }
         
-        /* กิมมิกไอคอน Econ ลอยเบาๆ อยู่เบื้องหลัง */
+        /* 📊 กิมมิกไอคอน Econ ลอยเบาๆ อยู่เบื้องหลัง */
         .bg-gimmick {
             position: absolute;
             font-size: 28px;
@@ -37,7 +37,7 @@
 
         .container {
             background-color: rgba(255, 255, 255, 0.95);
-            padding: 40px 30px;
+            padding: 50px 30px 40px 30px; /* เพิ่ม padding ด้านบนหลบปุ่มภาษา */
             border-radius: 30px;
             box-shadow: 0 15px 40px rgba(224, 71, 122, 0.15), 0 5px 15px rgba(40, 167, 69, 0.1);
             text-align: center;
@@ -47,6 +47,29 @@
             position: relative;
             z-index: 10;
             backdrop-filter: blur(10px);
+        }
+
+        /* 🌐 ปุ่มสลับภาษา TH / EN (แสดงมุมบนขวาของกล่องขาว) */
+        .lang-switch {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            background-color: #ffffff;
+            border: 2px solid #fbc4db;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+            color: #bd1550;
+            transition: all 0.2s ease;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.05);
+            z-index: 20;
+        }
+        .lang-switch:hover {
+            background-color: #bd1550;
+            color: #ffffff;
+            border-color: #bd1550;
         }
         
         .badge-69 {
@@ -74,9 +97,6 @@
             margin-bottom: 25px;
             line-height: 1.5;
         }
-        .subtitle strong {
-            color: #28a745;
-        }
         .input-group {
             margin-bottom: 20px;
         }
@@ -99,7 +119,8 @@
             outline: none;
         }
         
-        button {
+        /* แก้ไขบั๊ก gradient ซ่อมเรียบร้อยครับ */
+        button.btn-submit {
             background: linear-gradient(135deg, #ff65a3 0%, #ff4081 100%);
             color: white;
             border: none;
@@ -116,12 +137,12 @@
             align-items: center;
             gap: 10px;
         }
-        button:hover {
+        button.btn-submit:hover {
             background: linear-gradient(135deg, #28a745 0%, #218838 100%);
             transform: translateY(-3px);
             box-shadow: 0 10px 20px rgba(40, 167, 69, 0.4);
         }
-        button:active {
+        button.btn-submit:active {
             transform: translateY(-1px);
         }
 
@@ -152,70 +173,121 @@
 </head>
 <body>
 
+<!-- ส่วนตกแต่งเบื้องหลัง -->
 <div class="bg-gimmick" style="top: 15%; left: 10%; animation-delay: 0s;">📊</div>
 <div class="bg-gimmick" style="top: 25%; right: 12%; animation-delay: 1.5s;">💰</div>
 <div class="bg-gimmick" style="bottom: 20%; left: 15%; animation-delay: 3s;">📈</div>
 <div class="bg-gimmick" style="bottom: 15%; right: 8%; animation-delay: 4.5s;">☕</div>
 
 <div class="container">
+    <!-- ปุ่มสลับภาษา -->
+    <button class="lang-switch" onclick="toggleLanguage()" id="langBtn">EN</button>
+
     <div class="badge-69">ECON 69 • MENTOR MATCHING</div>
-    <h2>💖 ตามหาคำใบ้สายรหัส 💖</h2>
-    <div class="subtitle">ยินดีต้อนรับน้องๆ ECON 69 เข้าสู่ระบบค้นหาคำใบ้สายรหัส<br>กรอกรหัสนักศึกษา 9 หลักของคุณ เพื่อดูคำใบ้จากพี่ๆ ได้เลย ✨</div>
+    <h2 id="title">💖 ตามหาคำใบ้สายรหัส 💖</h2>
+    <div class="subtitle" id="subtitle">ยินดีต้อนรับน้องๆ ECON 69 เข้าสู่ระบบค้นหาคำใบ้สายรหัส<br>กรอกรหัสนักศึกษา 9 หลักของคุณ เพื่อดูคำใบ้จากพี่ๆ ได้เลย ✨</div>
     
     <div class="input-group">
         <input type="text" id="studentId" placeholder="กรอกรหัสนักศึกษาของคุณ 9 หลัก" maxlength="9" inputmode="numeric">
     </div>
-    <button onclick="getHint()">
-        <span>ดูคำใบ้พี่รหัส</span> 👀
+    <button class="btn-submit" onclick="getHint()">
+        <span id="btnText">ดูคำใบ้พี่รหัส</span> 👀
     </button>
     
     <div id="result" class="result-box"></div>
 </div>
 
 <script>
-    // 📊 Mapping รหัสน้อง (Econ 69) คู่กับ คำใบ้ของพี่รหัส
-    // (ตัวอย่างข้อมูล: คุณสามารถเปลี่ยน Key ด้านซ้ายให้เป็นรหัสน้อง และคำใบ้ขวาเป็นของพี่รหัสที่คู่กันได้เลยครับ)
-    const hintData = {
-        "691610387": "Grey (ตัวอย่างคำใบ้พี่รหัส)",
-        "691610001": "ชอบคุโรมิ",
-        "691610002": "ตัวเลข"
-        // เพิ่มรหัสน้องคู่กับคำใบ้พี่ลงไปตรงนี้ได้เลยครับ...
+    // ภาษาปัจจุบัน (เริ่มต้นเป็นไทย 'th')
+    let currentLang = 'th';
+
+    // คลังข้อความสองภาษา
+    const translations = {
+        th: {
+            title: "💖 ตามหาคำใบ้สายรหัส 💖",
+            subtitle: "ยินดีต้อนรับน้องๆ ECON 69 เข้าสู่ระบบค้นหาคำใบ้สายรหัส<br>กรอกรหัสนักศึกษา 9 หลักของคุณ เพื่อดูคำใบ้จากพี่ๆ ได้เลย ✨",
+            placeholder: "กรอกรหัสนักศึกษาของคุณ 9 หลัก",
+            btnText: "ดูคำใบ้พี่รหัส",
+            langBtn: "EN",
+            emptyError: "⚠️ อย่าลืมกรอกรหัสนักศึกษาของคุณก่อนกดดูคำใบ้นะจ๊ะ",
+            notFoundError: "😢 ไม่พบข้อมูลคำใบ้ของรหัสนี้ในระบบ ลองเช็กตัวเลขใหม่อีกทีนะจ๊ะ",
+            foundSuccess: "✨ พบข้อมูลคำใบ้สายรหัสของคุณแล้ว!"
+        },
+        en: {
+            title: "💖 Find Your Mentor's Hint 💖",
+            subtitle: "Welcome ECON 69 to the Mentor Matching System.<br>Enter your 9-digit student ID to see your mentor's hint! ✨",
+            placeholder: "Enter your 9-digit student ID",
+            btnText: "View Hint",
+            langBtn: "TH",
+            emptyError: "⚠️ Please enter your student ID before checking the hint.",
+            notFoundError: "😢 Student ID not found. Please double-check your numbers.",
+            foundSuccess: "✨ Your mentor's hint has been found!"
+        }
     };
 
-    // ฟังก์ชันดึงคำใบ้
+    // 💡 คลังข้อมูลคำใบ้สายรหัส (รหัสน้อง : คำใบ้พี่)
+    const hintData = {
+        "691610387": "Grey",
+        "691610001": "ชอบคุโรมิ",
+        "691610002": "ตัวเลข"
+    };
+
+    // ฟังก์ชันสลับภาษา
+    function toggleLanguage() {
+        currentLang = currentLang === 'th' ? 'en' : 'th';
+        updateDOMTexts();
+        
+        // ถ้ามีข้อความผลลัพธ์แสดงอยู่ ให้รีเฟรชคำแจ้งเตือนตามภาษาใหม่ด้วย
+        if (document.getElementById("result").style.display === "block") {
+            getHint(); 
+        }
+    }
+
+    // ฟังก์ชันอัปเดตข้อความบนหน้าจอ
+    function updateDOMTexts() {
+        const lang = translations[currentLang];
+        document.getElementById("title").innerText = lang.title;
+        document.getElementById("subtitle").innerHTML = lang.subtitle;
+        document.getElementById("studentId").placeholder = lang.placeholder;
+        document.getElementById("btnText").innerText = lang.btnText;
+        document.getElementById("langBtn").innerText = lang.langBtn;
+    }
+
+    // ฟังก์ชันค้นหาคำใบ้
     function getHint() {
         const idInput = document.getElementById("studentId").value.trim();
         const resultBox = document.getElementById("result");
+        const lang = translations[currentLang];
         
         resultBox.style.display = "none";
         resultBox.className = "result-box";
 
         if (idInput === "") {
-            resultBox.innerText = "⚠️ อย่าลืมกรอกรหัสนักศึกษาของคุณก่อนกดดูคำใบ้นะจ๊ะ";
+            resultBox.innerText = lang.emptyError;
             resultBox.classList.add("error");
             resultBox.style.display = "block";
             return;
         }
 
         if (hintData[idInput]) {
-            resultBox.innerHTML = `✨ <span style="color: #555; font-size:14px;">พบข้อมูลคำใบ้สายรหัสของคุณแล้ว!</span><br><br><span style="font-size:22px; color:#1b5e20;">"${hintData[idInput]}"</span>`;
+            resultBox.innerHTML = `✨ <span style="color: #555; font-size:14px;">${lang.foundSuccess}</span><br><br><span style="font-size:22px; color:#1b5e20;">"${hintData[idInput]}"</span>`;
             resultBox.classList.add("success");
         } else {
-            resultBox.innerText = "😢 ไม่พบข้อมูลคำใบ้ของรหัสนี้ในระบบ ลองเช็กตัวเลขใหม่อีกทีนะจ๊ะ";
+            resultBox.innerText = lang.notFoundError;
             resultBox.classList.add("error");
         }
         
         resultBox.style.display = "block";
     }
 
-    // 🔗 ระบบรองรับ URL Link (Query Parameter) เช่น ?id=691610387
+    // 🔗 ระบบรองรับ URL ลิงก์ล็อกรหัสรายคนอัตโนมัติ (เช่น ?id=691610387)
     window.onload = function() {
         const urlParams = new URLSearchParams(window.location.search);
         const idParam = urlParams.get('id');
         
         if (idParam) {
             document.getElementById("studentId").value = idParam;
-            getHint(); // ค้นหาและแสดงผลทันทีที่เปิดลิงก์
+            getHint();
         }
     }
 </script>
