@@ -10,7 +10,8 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         body {
-            background: linear-gradient(135deg, #fff5f8 0%, #fbc4db 50%, #d4edda 100%);
+            /* 🌸 ปรับการไล่เฉดสีแบบพาสเทลให้เนียนตาและสมูทยิ่งขึ้น */
+            background: radial-gradient(circle at 10% 20%, #fff7fa 0%, #fbcde2 45%, #e1f4e7 90%);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -21,31 +22,33 @@
             position: relative;
         }
         
+        /* ✨ ไอคอนฉากหลังปรับให้ขยับนุ่มนวลพริ้วไหวขึ้น */
         .bg-gimmick {
             position: absolute;
-            font-size: 24px;
-            opacity: 0.08;
-            animation: float 6s ease-in-out infinite;
+            font-size: 28px;
+            opacity: 0.12;
+            animation: floatGimmick 8s ease-in-out infinite;
             user-select: none;
             z-index: 1;
         }
-        @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-15px) rotate(5deg); }
+        @keyframes floatGimmick {
+            0%, 100% { transform: translateY(0) scale(1) rotate(0deg); }
+            50% { transform: translateY(-20px) scale(1.08) rotate(7deg); }
         }
 
         .container {
-            background-color: rgba(255, 255, 255, 0.95);
-            padding: 50px 30px 40px 30px;
-            border-radius: 30px;
-            box-shadow: 0 15px 40px rgba(224, 71, 122, 0.15), 0 5px 15px rgba(40, 167, 69, 0.1);
+            background-color: rgba(255, 255, 255, 0.94);
+            padding: 50px 32px 42px 32px;
+            border-radius: 32px;
+            /* ปรับมิติเงาฟุ้งสไตล์น่ารักผสมผสานความคลีน */
+            box-shadow: 0 20px 50px rgba(224, 71, 122, 0.12), 0 5px 20px rgba(40, 167, 69, 0.06);
             text-align: center;
             max-width: 480px;
             width: 100%;
-            border: 4px solid #fff;
+            border: 4px solid rgba(255, 255, 255, 0.8);
             position: relative;
             z-index: 10;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(16px);
         }
 
         .lang-switch {
@@ -60,26 +63,27 @@
             font-weight: bold;
             cursor: pointer;
             color: #bd1550;
-            transition: all 0.2s ease;
-            box-shadow: 0 3px 6px rgba(0,0,0,0.05);
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 8px rgba(224, 71, 122, 0.08);
             z-index: 20;
         }
         .lang-switch:hover {
             background-color: #bd1550;
             color: #ffffff;
             border-color: #bd1550;
+            transform: scale(1.05);
         }
         
         .badge-69 {
             background: linear-gradient(45deg, #ff4081, #28a745);
             color: white;
-            padding: 6px 16px;
+            padding: 6px 18px;
             border-radius: 50px;
-            font-size: 13px;
+            font-size: 12.5px;
             font-weight: bold;
             display: inline-block;
-            margin-bottom: 15px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            margin-bottom: 18px;
+            box-shadow: 0 5px 12px rgba(255, 64, 129, 0.2);
             letter-spacing: 0.5px;
         }
 
@@ -96,10 +100,10 @@
             line-height: 1.6;
         }
         .note-highlight {
-            color: #bd1550;
+            color: #e23b74;
             font-weight: bold;
             font-size: 13px;
-            margin-top: 5px;
+            margin-top: 6px;
             display: block;
         }
         .input-group {
@@ -109,7 +113,7 @@
             width: 100%;
             padding: 16px;
             border: 2.5px solid #fbc4db;
-            border-radius: 20px;
+            border-radius: 22px;
             font-size: 18px;
             text-align: center;
             transition: all 0.3s ease;
@@ -120,8 +124,9 @@
         }
         input[type="text"]:focus {
             border-color: #28a745;
-            box-shadow: 0 0 15px rgba(40, 167, 69, 0.2);
+            box-shadow: 0 0 15px rgba(40, 167, 69, 0.15);
             outline: none;
+            background-color: #ffffff;
         }
         
         button.btn-submit {
@@ -131,11 +136,11 @@
             padding: 16px 25px;
             font-size: 18px;
             font-weight: bold;
-            border-radius: 20px;
+            border-radius: 22px;
             cursor: pointer;
             width: 100%;
-            transition: all 0.3s ease;
-            box-shadow: 0 6px 15px rgba(255, 64, 129, 0.3);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 6px 16px rgba(255, 64, 129, 0.25);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -143,7 +148,7 @@
         button.btn-submit:hover {
             background: linear-gradient(135deg, #28a745 0%, #218838 100%);
             transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(40, 167, 69, 0.4);
+            box-shadow: 0 10px 22px rgba(40, 167, 69, 0.35);
         }
         button.btn-submit:active {
             transform: translateY(-1px);
@@ -151,54 +156,58 @@
 
         .result-box {
             margin-top: 25px;
-            padding: 22px;
-            border-radius: 20px;
+            padding: 24px;
+            border-radius: 22px;
             display: none;
             font-weight: bold;
             line-height: 1.6;
             animation: cubic-bezier(0.175, 0.885, 0.32, 1.275) fadeIn 0.5s forwards;
         }
         .success {
-            background-color: #e8f5e9;
+            background-color: #edfcf0;
             color: #1b5e20;
             border: 2.5px solid #a5d6a7;
+            box-shadow: 0 8px 20px rgba(40, 167, 69, 0.05);
         }
         .error {
-            background-color: #ffebee;
+            background-color: #fff5f6;
             color: #c62828;
             border: 2.5px solid #ffcdd2;
+            box-shadow: 0 8px 20px rgba(198, 40, 40, 0.05);
         }
         
         .hint-label {
-            font-size: 13px;
-            color: #555;
+            font-size: 14px;
+            color: #444;
             margin-bottom: 2px;
             display: block;
-            font-weight: normal;
+            font-weight: 600;
         }
         .hint-text {
-            font-size: 22px;
+            font-size: 23px;
             color: #1b5e20;
             font-weight: bold;
             display: block;
+            text-shadow: 0 1px 1px rgba(0,0,0,0.02);
         }
         .hint-divider {
-            margin: 12px 0;
+            margin: 14px 0;
             border: 0;
-            border-top: 1px dashed #a5d6a7;
+            border-top: 1px dashed #b2dfdb;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.9) translateY(15px); }
+            from { opacity: 0; transform: scale(0.93) translateY(12px); }
             to { opacity: 1; transform: scale(1) translateY(0); }
         }
     </style>
 </head>
 <body>
 
-<div class="bg-gimmick" style="top: 15%; left: 10%; animation-delay: 0s;">📊</div>
-<div class="bg-gimmick" style="top: 25%; right: 12%; animation-delay: 1.5s;">📈</div>
-<div class="bg-gimmick" style="bottom: 20%; left: 15%; animation-delay: 3s;">📉</div>
+<div class="bg-gimmick" style="top: 15%; left: 8%; animation-delay: 0s;">📊</div>
+<div class="bg-gimmick" style="top: 25%; right: 10%; animation-delay: 2s;">📈</div>
+<div class="bg-gimmick" style="bottom: 22%; left: 12%; animation-delay: 4s;">📉</div>
+<div class="bg-gimmick" style="bottom: 14%; right: 9%; animation-delay: 6s;">✨</div>
 
 <div class="container">
     <button class="lang-switch" onclick="toggleLanguage()" id="langBtn">EN</button>
@@ -207,7 +216,7 @@
     <h2 id="title">ระบบค้นหาคำใบ้สายรหัส</h2>
     <div class="subtitle" id="subtitle">
         ยินดีต้อนรับนักศึกษา ECON 69 เข้าสู่ระบบค้นหาคำใบ้สายรหัส<br>กรอกรหัสนักศึกษา 9 หลักของคุณ เพื่อดูคำใบ้จากพี่รหัส
-        <span class="note-highlight">*หมายเหตุ: หากระบบแสดง 2-3 คำใบ้ หมายความว่าน้องมีพี่รหัสตามจำนวนของคำใบ้นั้นๆ ครับ</span>
+        <span class="note-highlight">*หมายเหตุ: หากน้องได้รับคำใบ้มากกว่า 1 คำใบ้ หมายความว่าน้องมีพี่รหัสตามจำนวนคำใบ้นั้นๆ ครับ</span>
     </div>
     
     <div class="input-group">
@@ -226,7 +235,7 @@
     const translations = {
         th: {
             title: "ระบบค้นหาคำใบ้สายรหัส",
-            subtitle: "ยินดีต้อนรับนักศึกษา ECON 69 เข้าสู่ระบบค้นหาคำใบ้สายรหัส<br>กรอกรหัสนักศึกษา 9 หลักของคุณ เพื่อดูคำใบ้จากพี่รหัส<span class='note-highlight'>*หมายเหตุ: หากระบบแสดง 2-3 คำใบ้ หมายความว่าน้องมีพี่รหัสตามจำนวนของคำใบ้นั้นๆ ครับ</span>",
+            subtitle: "ยินดีต้อนรับนักศึกษา ECON 69 เข้าสู่ระบบค้นหาคำใบ้สายรหัส<br>กรอกรหัสนักศึกษา 9 หลักของคุณ เพื่อดูคำใบ้จากพี่รหัส<span class='note-highlight'>*หมายเหตุ: หากน้องได้รับคำใบ้มากกว่า 1 คำใบ้ หมายความว่าน้องมีพี่รหัสตามจำนวนคำใบ้นั้นๆ ครับ</span>",
             placeholder: "กรอกรหัสนักศึกษา 9 หลัก",
             btnText: "ดูคำใบ้พี่รหัส",
             langBtn: "EN",
@@ -234,13 +243,11 @@
             notFoundError: "ไม่พบข้อมูลคำใบ้ของรหัสนี้ในระบบ กรุณาตรวจสอบใหม่อีกครั้ง",
             foundSuccess: "พบข้อมูลคำใบ้สายรหัสของคุณแล้ว",
             hintSingle: "คำใบ้จากพี่รหัสของคุณ:",
-            hintOne: "คำใบ้ที่ 1:",
-            hintTwo: "คำใบ้ที่ 2:",
-            hintThree: "คำใบ้ที่ 3:"
+            hintMultiplePrefix: "คำใบ้จากพี่รหัสคนที่ "
         },
         en: {
             title: "Mentor Hint Search System",
-            subtitle: "Welcome ECON 69 students to the Mentor Matching System.<br>Enter your 9-digit student ID to see your mentor's hint.<span class='note-highlight'>*Note: If 2-3 hints are displayed, it means you have multiple mentors matching that exact number of hints.</span>",
+            subtitle: "Welcome ECON 69 students to the Mentor Matching System.<br>Enter your 9-digit student ID to see your mentor's hint.<span class='note-highlight'>*Note: If you receive more than 1 hint, it means you have multiple mentors matching that exact number of hints.</span>",
             placeholder: "Enter your 9-digit student ID",
             btnText: "View Hint",
             langBtn: "TH",
@@ -248,21 +255,16 @@
             notFoundError: "Student ID not found. Please double-check your numbers.",
             foundSuccess: "Your mentor's hint has been found",
             hintSingle: "Your mentor's hint:",
-            hintOne: "Hint 1:",
-            hintTwo: "Hint 2:",
-            hintThree: "Hint 3:"
+            hintMultiplePrefix: "Hint from mentor "
         }
     };
 
-    // 💡 วิธีพิมพ์คลังข้อความเมื่อมี 1, 2 หรือ 3 คำใบ้:
-    // - มี 1 คำใบ้: "ข้อความคำใบ้"
-    // - 有 2 คำใบ้: ["คำใบ้แรก", "คำใบ้สอง"]
-    // - มี 3 คำใบ้: ["คำใบ้แรก", "คำใบ้สอง", "คำใบ้สาม"]
+    // 💡 คลังข้อมูลคำใบ้สายรหัส (รหัสน้อง : คำใบ้พี่)
     const hintData = {
         "691610387": "Grey",
         "691610001": ["ชอบคุโรมิ", "ใส่แว่นตัวเล็กๆ"], 
         "691610002": "ตัวเลข",
-        "691610003": ["สูงกว่า 175", "ชอบเล่นบาส", "ใจดีมาก"] // ตัวอย่างแบบมีพี่รหัส 3 คน
+        "691610003": ["สูงกว่า 175", "ชอบเล่นบาส", "ใจดีมาก"]
     };
 
     function toggleLanguage() {
@@ -303,23 +305,18 @@
             let htmlContent = `<span style="color: #555; font-size:14px; display:block; margin-bottom:15px;">✨ ${lang.foundSuccess}</span>`;
             
             if (Array.isArray(data)) {
-                // วนลูปแสดงคำใบ้ตามจำนวนใน Array (รองรับทั้ง 2 และ 3 คำใบ้)
                 data.forEach((hint, index) => {
-                    let label = lang.hintOne;
-                    if (index === 1) label = lang.hintTwo;
-                    if (index === 2) label = lang.hintThree;
+                    let label = `${lang.hintMultiplePrefix}${index + 1}:`;
 
                     htmlContent += `
                         <span class="hint-label">${label}</span>
                         <span class="hint-text">"${hint}"</span>
                     `;
-                    // ถ้าไม่ใช่ตัวสุดท้าย ให้ใส่เส้นคั่นกระจายสัดส่วนลงมา
                     if (index < data.length - 1) {
                         htmlContent += `<hr class="hint-divider">`;
                     }
                 });
             } else {
-                // กรณีมีคำใบ้เดียวปกติ
                 htmlContent += `
                     <span class="hint-label">${lang.hintSingle}</span>
                     <span class="hint-text">"${data}"</span>
