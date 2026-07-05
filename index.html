@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Econ 69 | Senior-Junior Mentor Match</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background: linear-gradient(135deg, #fff5f8 0%, #fbc4db 50%, #d4edda 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* กิมมิกไอคอน Econ ลอยเบาๆ อยู่เบื้องหลัง */
+        .bg-gimmick {
+            position: absolute;
+            font-size: 28px;
+            opacity: 0.15;
+            animation: float 6s ease-in-out infinite;
+            user-select: none;
+            z-index: 1;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(10deg); }
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 40px 30px;
+            border-radius: 30px;
+            box-shadow: 0 15px 40px rgba(224, 71, 122, 0.15), 0 5px 15px rgba(40, 167, 69, 0.1);
+            text-align: center;
+            max-width: 480px;
+            width: 100%;
+            border: 4px solid #fff;
+            position: relative;
+            z-index: 10;
+            backdrop-filter: blur(10px);
+        }
+        
+        .badge-69 {
+            background: linear-gradient(45deg, #ff4081, #28a745);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            letter-spacing: 0.5px;
+        }
+
+        h2 {
+            color: #bd1550;
+            margin: 5px 0;
+            font-size: 26px;
+            font-weight: 800;
+        }
+        .subtitle {
+            color: #555;
+            font-size: 14px;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+        .subtitle strong {
+            color: #28a745;
+        }
+        .input-group {
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 16px;
+            border: 2.5px solid #fbc4db;
+            border-radius: 20px;
+            font-size: 18px;
+            text-align: center;
+            transition: all 0.3s ease;
+            background-color: #fffbfd;
+            letter-spacing: 1.5px;
+            font-weight: bold;
+            color: #444;
+        }
+        input[type="text"]:focus {
+            border-color: #28a745;
+            box-shadow: 0 0 15px rgba(40, 167, 69, 0.2);
+            outline: none;
+        }
+        
+        button {
+            background: linear-gradient(135deg, #ff65a3 0%, #ff4081 100%);
+            color: white;
+            border: none;
+            padding: 16px 25px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 20px;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 15px rgba(255, 64, 129, 0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+        button:hover {
+            background: linear-gradient(135deg, #28a745 0%, #218838 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(40, 167, 69, 0.4);
+        }
+        button:active {
+            transform: translateY(-1px);
+        }
+
+        .result-box {
+            margin-top: 25px;
+            padding: 22px;
+            border-radius: 20px;
+            display: none;
+            font-weight: bold;
+            line-height: 1.6;
+            animation: cubic-bezier(0.175, 0.885, 0.32, 1.275) fadeIn 0.5s forwards;
+        }
+        .success {
+            background-color: #e8f5e9;
+            color: #1b5e20;
+            border: 2.5px solid #a5d6a7;
+        }
+        .error {
+            background-color: #ffebee;
+            color: #c62828;
+            border: 2.5px solid #ffcdd2;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9) translateY(15px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="bg-gimmick" style="top: 15%; left: 10%; animation-delay: 0s;">📊</div>
+<div class="bg-gimmick" style="top: 25%; right: 12%; animation-delay: 1.5s;">💰</div>
+<div class="bg-gimmick" style="bottom: 20%; left: 15%; animation-delay: 3s;">📈</div>
+<div class="bg-gimmick" style="bottom: 15%; right: 8%; animation-delay: 4.5s;">☕</div>
+
+<div class="container">
+    <div class="badge-69">ECON 69 • MENTOR MATCHING</div>
+    <h2>💖 ตามหาคำใบ้สายรหัส 💖</h2>
+    <div class="subtitle">ยินดีต้อนรับน้องๆ ECON 69 เข้าสู่ระบบค้นหาคำใบ้สายรหัส<br>กรอกรหัสนักศึกษา 9 หลักของคุณ เพื่อดูคำใบ้จากพี่ๆ ได้เลย ✨</div>
+    
+    <div class="input-group">
+        <input type="text" id="studentId" placeholder="กรอกรหัสนักศึกษาของคุณ 9 หลัก" maxlength="9" inputmode="numeric">
+    </div>
+    <button onclick="getHint()">
+        <span>ดูคำใบ้พี่รหัส</span> 👀
+    </button>
+    
+    <div id="result" class="result-box"></div>
+</div>
+
+<script>
+    // 📊 Mapping รหัสน้อง (Econ 69) คู่กับ คำใบ้ของพี่รหัส
+    // (ตัวอย่างข้อมูล: คุณสามารถเปลี่ยน Key ด้านซ้ายให้เป็นรหัสน้อง และคำใบ้ขวาเป็นของพี่รหัสที่คู่กันได้เลยครับ)
+    const hintData = {
+        "691610387": "Grey (ตัวอย่างคำใบ้พี่รหัส)",
+        "691610001": "ชอบคุโรมิ",
+        "691610002": "ตัวเลข"
+        // เพิ่มรหัสน้องคู่กับคำใบ้พี่ลงไปตรงนี้ได้เลยครับ...
+    };
+
+    // ฟังก์ชันดึงคำใบ้
+    function getHint() {
+        const idInput = document.getElementById("studentId").value.trim();
+        const resultBox = document.getElementById("result");
+        
+        resultBox.style.display = "none";
+        resultBox.className = "result-box";
+
+        if (idInput === "") {
+            resultBox.innerText = "⚠️ อย่าลืมกรอกรหัสนักศึกษาของคุณก่อนกดดูคำใบ้นะจ๊ะ";
+            resultBox.classList.add("error");
+            resultBox.style.display = "block";
+            return;
+        }
+
+        if (hintData[idInput]) {
+            resultBox.innerHTML = `✨ <span style="color: #555; font-size:14px;">พบข้อมูลคำใบ้สายรหัสของคุณแล้ว!</span><br><br><span style="font-size:22px; color:#1b5e20;">"${hintData[idInput]}"</span>`;
+            resultBox.classList.add("success");
+        } else {
+            resultBox.innerText = "😢 ไม่พบข้อมูลคำใบ้ของรหัสนี้ในระบบ ลองเช็กตัวเลขใหม่อีกทีนะจ๊ะ";
+            resultBox.classList.add("error");
+        }
+        
+        resultBox.style.display = "block";
+    }
+
+    // 🔗 ระบบรองรับ URL Link (Query Parameter) เช่น ?id=691610387
+    window.onload = function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const idParam = urlParams.get('id');
+        
+        if (idParam) {
+            document.getElementById("studentId").value = idParam;
+            getHint(); // ค้นหาและแสดงผลทันทีที่เปิดลิงก์
+        }
+    }
+</script>
+
+</body>
+</html>
