@@ -21,23 +21,22 @@
             position: relative;
         }
         
-        /* 📊 กิมมิกไอคอน Econ ลอยเบาๆ อยู่เบื้องหลัง */
         .bg-gimmick {
             position: absolute;
-            font-size: 28px;
-            opacity: 0.15;
+            font-size: 24px;
+            opacity: 0.08;
             animation: float 6s ease-in-out infinite;
             user-select: none;
             z-index: 1;
         }
         @keyframes float {
             0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-15px) rotate(10deg); }
+            50% { transform: translateY(-15px) rotate(5deg); }
         }
 
         .container {
             background-color: rgba(255, 255, 255, 0.95);
-            padding: 50px 30px 40px 30px; /* เพิ่ม padding ด้านบนหลบปุ่มภาษา */
+            padding: 50px 30px 40px 30px;
             border-radius: 30px;
             box-shadow: 0 15px 40px rgba(224, 71, 122, 0.15), 0 5px 15px rgba(40, 167, 69, 0.1);
             text-align: center;
@@ -49,7 +48,6 @@
             backdrop-filter: blur(10px);
         }
 
-        /* 🌐 ปุ่มสลับภาษา TH / EN (แสดงมุมบนขวาของกล่องขาว) */
         .lang-switch {
             position: absolute;
             top: 20px;
@@ -95,7 +93,14 @@
             color: #555;
             font-size: 14px;
             margin-bottom: 25px;
-            line-height: 1.5;
+            line-height: 1.6;
+        }
+        .note-highlight {
+            color: #bd1550;
+            font-weight: bold;
+            font-size: 13px;
+            margin-top: 5px;
+            display: block;
         }
         .input-group {
             margin-bottom: 20px;
@@ -119,7 +124,6 @@
             outline: none;
         }
         
-        /* แก้ไขบั๊ก gradient ซ่อมเรียบร้อยครับ */
         button.btn-submit {
             background: linear-gradient(135deg, #ff65a3 0%, #ff4081 100%);
             color: white;
@@ -135,7 +139,6 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 10px;
         }
         button.btn-submit:hover {
             background: linear-gradient(135deg, #28a745 0%, #218838 100%);
@@ -165,6 +168,26 @@
             color: #c62828;
             border: 2.5px solid #ffcdd2;
         }
+        
+        .hint-label {
+            font-size: 13px;
+            color: #555;
+            margin-bottom: 2px;
+            display: block;
+            font-weight: normal;
+        }
+        .hint-text {
+            font-size: 22px;
+            color: #1b5e20;
+            font-weight: bold;
+            display: block;
+        }
+        .hint-divider {
+            margin: 12px 0;
+            border: 0;
+            border-top: 1px dashed #a5d6a7;
+        }
+
         @keyframes fadeIn {
             from { opacity: 0; transform: scale(0.9) translateY(15px); }
             to { opacity: 1; transform: scale(1) translateY(0); }
@@ -173,77 +196,83 @@
 </head>
 <body>
 
-<!-- ส่วนตกแต่งเบื้องหลัง -->
 <div class="bg-gimmick" style="top: 15%; left: 10%; animation-delay: 0s;">📊</div>
-<div class="bg-gimmick" style="top: 25%; right: 12%; animation-delay: 1.5s;">💰</div>
-<div class="bg-gimmick" style="bottom: 20%; left: 15%; animation-delay: 3s;">📈</div>
-<div class="bg-gimmick" style="bottom: 15%; right: 8%; animation-delay: 4.5s;">☕</div>
+<div class="bg-gimmick" style="top: 25%; right: 12%; animation-delay: 1.5s;">📈</div>
+<div class="bg-gimmick" style="bottom: 20%; left: 15%; animation-delay: 3s;">📉</div>
 
 <div class="container">
-    <!-- ปุ่มสลับภาษา -->
     <button class="lang-switch" onclick="toggleLanguage()" id="langBtn">EN</button>
 
     <div class="badge-69">ECON 69 • MENTOR MATCHING</div>
-    <h2 id="title">💖 ตามหาคำใบ้สายรหัส 💖</h2>
-    <div class="subtitle" id="subtitle">ยินดีต้อนรับน้องๆ ECON 69 เข้าสู่ระบบค้นหาคำใบ้สายรหัส<br>กรอกรหัสนักศึกษา 9 หลักของคุณ เพื่อดูคำใบ้จากพี่ๆ ได้เลย ✨</div>
+    <h2 id="title">ระบบค้นหาคำใบ้สายรหัส</h2>
+    <div class="subtitle" id="subtitle">
+        ยินดีต้อนรับนักศึกษา ECON 69 เข้าสู่ระบบค้นหาคำใบ้สายรหัส<br>กรอกรหัสนักศึกษา 9 หลักของคุณ เพื่อดูคำใบ้จากพี่รหัส
+        <span class="note-highlight">*หมายเหตุ: หากระบบแสดง 2-3 คำใบ้ หมายความว่าน้องมีพี่รหัสตามจำนวนของคำใบ้นั้นๆ ครับ</span>
+    </div>
     
     <div class="input-group">
-        <input type="text" id="studentId" placeholder="กรอกรหัสนักศึกษาของคุณ 9 หลัก" maxlength="9" inputmode="numeric">
+        <input type="text" id="studentId" placeholder="กรอกรหัสนักศึกษา 9 หลัก" maxlength="9" inputmode="numeric">
     </div>
     <button class="btn-submit" onclick="getHint()">
-        <span id="btnText">ดูคำใบ้พี่รหัส</span> 👀
+        <span id="btnText">ดูคำใบ้พี่รหัส</span>
     </button>
     
     <div id="result" class="result-box"></div>
 </div>
 
 <script>
-    // ภาษาปัจจุบัน (เริ่มต้นเป็นไทย 'th')
     let currentLang = 'th';
 
-    // คลังข้อความสองภาษา
     const translations = {
         th: {
-            title: "💖 ตามหาคำใบ้สายรหัส 💖",
-            subtitle: "ยินดีต้อนรับน้องๆ ECON 69 เข้าสู่ระบบค้นหาคำใบ้สายรหัส<br>กรอกรหัสนักศึกษา 9 หลักของคุณ เพื่อดูคำใบ้จากพี่ๆ ได้เลย ✨",
-            placeholder: "กรอกรหัสนักศึกษาของคุณ 9 หลัก",
+            title: "ระบบค้นหาคำใบ้สายรหัส",
+            subtitle: "ยินดีต้อนรับนักศึกษา ECON 69 เข้าสู่ระบบค้นหาคำใบ้สายรหัส<br>กรอกรหัสนักศึกษา 9 หลักของคุณ เพื่อดูคำใบ้จากพี่รหัส<span class='note-highlight'>*หมายเหตุ: หากระบบแสดง 2-3 คำใบ้ หมายความว่าน้องมีพี่รหัสตามจำนวนของคำใบ้นั้นๆ ครับ</span>",
+            placeholder: "กรอกรหัสนักศึกษา 9 หลัก",
             btnText: "ดูคำใบ้พี่รหัส",
             langBtn: "EN",
-            emptyError: "⚠️ อย่าลืมกรอกรหัสนักศึกษาของคุณก่อนกดดูคำใบ้นะจ๊ะ",
-            notFoundError: "😢 ไม่พบข้อมูลคำใบ้ของรหัสนี้ในระบบ ลองเช็กตัวเลขใหม่อีกทีนะจ๊ะ",
-            foundSuccess: "✨ พบข้อมูลคำใบ้สายรหัสของคุณแล้ว!"
+            emptyError: "กรุณากรอกรหัสนักศึกษาของคุณก่อนกดดูคำใบ้",
+            notFoundError: "ไม่พบข้อมูลคำใบ้ของรหัสนี้ในระบบ กรุณาตรวจสอบใหม่อีกครั้ง",
+            foundSuccess: "พบข้อมูลคำใบ้สายรหัสของคุณแล้ว",
+            hintSingle: "คำใบ้จากพี่รหัสของคุณ:",
+            hintOne: "คำใบ้ที่ 1:",
+            hintTwo: "คำใบ้ที่ 2:",
+            hintThree: "คำใบ้ที่ 3:"
         },
         en: {
-            title: "💖 Find Your Mentor's Hint 💖",
-            subtitle: "Welcome ECON 69 to the Mentor Matching System.<br>Enter your 9-digit student ID to see your mentor's hint! ✨",
+            title: "Mentor Hint Search System",
+            subtitle: "Welcome ECON 69 students to the Mentor Matching System.<br>Enter your 9-digit student ID to see your mentor's hint.<span class='note-highlight'>*Note: If 2-3 hints are displayed, it means you have multiple mentors matching that exact number of hints.</span>",
             placeholder: "Enter your 9-digit student ID",
             btnText: "View Hint",
             langBtn: "TH",
-            emptyError: "⚠️ Please enter your student ID before checking the hint.",
-            notFoundError: "😢 Student ID not found. Please double-check your numbers.",
-            foundSuccess: "✨ Your mentor's hint has been found!"
+            emptyError: "Please enter your student ID before checking the hint.",
+            notFoundError: "Student ID not found. Please double-check your numbers.",
+            foundSuccess: "Your mentor's hint has been found",
+            hintSingle: "Your mentor's hint:",
+            hintOne: "Hint 1:",
+            hintTwo: "Hint 2:",
+            hintThree: "Hint 3:"
         }
     };
 
-    // 💡 คลังข้อมูลคำใบ้สายรหัส (รหัสน้อง : คำใบ้พี่)
+    // 💡 วิธีพิมพ์คลังข้อความเมื่อมี 1, 2 หรือ 3 คำใบ้:
+    // - มี 1 คำใบ้: "ข้อความคำใบ้"
+    // - 有 2 คำใบ้: ["คำใบ้แรก", "คำใบ้สอง"]
+    // - มี 3 คำใบ้: ["คำใบ้แรก", "คำใบ้สอง", "คำใบ้สาม"]
     const hintData = {
         "691610387": "Grey",
-        "691610001": "ชอบคุโรมิ",
-        "691610002": "ตัวเลข"
+        "691610001": ["ชอบคุโรมิ", "ใส่แว่นตัวเล็กๆ"], 
+        "691610002": "ตัวเลข",
+        "691610003": ["สูงกว่า 175", "ชอบเล่นบาส", "ใจดีมาก"] // ตัวอย่างแบบมีพี่รหัส 3 คน
     };
 
-    // ฟังก์ชันสลับภาษา
     function toggleLanguage() {
         currentLang = currentLang === 'th' ? 'en' : 'th';
         updateDOMTexts();
-        
-        // ถ้ามีข้อความผลลัพธ์แสดงอยู่ ให้รีเฟรชคำแจ้งเตือนตามภาษาใหม่ด้วย
         if (document.getElementById("result").style.display === "block") {
             getHint(); 
         }
     }
 
-    // ฟังก์ชันอัปเดตข้อความบนหน้าจอ
     function updateDOMTexts() {
         const lang = translations[currentLang];
         document.getElementById("title").innerText = lang.title;
@@ -253,7 +282,6 @@
         document.getElementById("langBtn").innerText = lang.langBtn;
     }
 
-    // ฟังก์ชันค้นหาคำใบ้
     function getHint() {
         const idInput = document.getElementById("studentId").value.trim();
         const resultBox = document.getElementById("result");
@@ -269,8 +297,36 @@
             return;
         }
 
-        if (hintData[idInput]) {
-            resultBox.innerHTML = `✨ <span style="color: #555; font-size:14px;">${lang.foundSuccess}</span><br><br><span style="font-size:22px; color:#1b5e20;">"${hintData[idInput]}"</span>`;
+        const data = hintData[idInput];
+
+        if (data) {
+            let htmlContent = `<span style="color: #555; font-size:14px; display:block; margin-bottom:15px;">✨ ${lang.foundSuccess}</span>`;
+            
+            if (Array.isArray(data)) {
+                // วนลูปแสดงคำใบ้ตามจำนวนใน Array (รองรับทั้ง 2 และ 3 คำใบ้)
+                data.forEach((hint, index) => {
+                    let label = lang.hintOne;
+                    if (index === 1) label = lang.hintTwo;
+                    if (index === 2) label = lang.hintThree;
+
+                    htmlContent += `
+                        <span class="hint-label">${label}</span>
+                        <span class="hint-text">"${hint}"</span>
+                    `;
+                    // ถ้าไม่ใช่ตัวสุดท้าย ให้ใส่เส้นคั่นกระจายสัดส่วนลงมา
+                    if (index < data.length - 1) {
+                        htmlContent += `<hr class="hint-divider">`;
+                    }
+                });
+            } else {
+                // กรณีมีคำใบ้เดียวปกติ
+                htmlContent += `
+                    <span class="hint-label">${lang.hintSingle}</span>
+                    <span class="hint-text">"${data}"</span>
+                `;
+            }
+            
+            resultBox.innerHTML = htmlContent;
             resultBox.classList.add("success");
         } else {
             resultBox.innerText = lang.notFoundError;
@@ -280,7 +336,6 @@
         resultBox.style.display = "block";
     }
 
-    // 🔗 ระบบรองรับ URL ลิงก์ล็อกรหัสรายคนอัตโนมัติ (เช่น ?id=691610387)
     window.onload = function() {
         const urlParams = new URLSearchParams(window.location.search);
         const idParam = urlParams.get('id');
