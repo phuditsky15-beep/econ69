@@ -193,6 +193,72 @@
             border-top: 1px dashed #b2dfdb;
         }
 
+        /* --- CSS ส่วนของ Popup (Modal) --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(6px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-box {
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 28px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            transform: scale(0.85);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 3px solid #fbc4db;
+        }
+        .modal-overlay.active .modal-box {
+            transform: scale(1);
+        }
+        .modal-title {
+            color: #bd1550;
+            font-size: 20px;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+        .modal-text {
+            color: #555;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 22px;
+        }
+        .btn-accept {
+            background: linear-gradient(135deg, #28a745 0%, #218838 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 18px;
+            cursor: pointer;
+            width: 100%;
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+            transition: all 0.2s ease;
+        }
+        .btn-accept:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 18px rgba(40, 167, 69, 0.4);
+        }
+
         .footer-contact-wrapper {
             position: fixed;
             bottom: 25px;
@@ -262,7 +328,7 @@
 <div class="bg-gimmick" style="top: 15%; left: 8%; animation-delay: 0s;">📊</div>
 <div class="bg-gimmick" style="top: 25%; right: 10%; animation-delay: 2s;">📈</div>
 <div class="bg-gimmick" style="bottom: 22%; left: 12%; animation-delay: 4s;">📉</div>
-<div class="bg-gimmick" style="bottom: 14%; right: 9%; animation-delay: 6s;">✨</div>
+<div class="bg-gimmick" style="bottom: 14%; right: 9%; animation-delay: 6s;">🌾</div>
 
 <div class="container">
     <button class="lang-switch" onclick="toggleLanguage()" id="langBtn">EN</button>
@@ -270,22 +336,32 @@
     <div class="badge-69">ECON 69 • MENTOR MATCHING</div>
     <h2 id="title">ระบบค้นหาคำใบ้สายรหัส</h2>
     <div class="subtitle" id="subtitle">
-        ยินดีต้อนรับน้องๆ ECON 69 เข้าสู่ระบบค้นหาคำใบ้สายรหัส<br>กรอกรหัสนักศึกษา 9 หลัก เพื่อดูคำใบ้จากพี่รหัสได้เลย
-        <span class="note-highlight">*หมายเหตุ: หากน้องได้รับคำใบ้มากกว่า 1 คำใบ้ หมายความว่าน้องมีพี่รหัสตามจำนวนคำใบ้นั้นๆ </span>
+        ยินดีต้อนรับน้องๆ ECON 69 เข้าสู่การตามหาคำใบ้สายรหัส<br>กรอกรหัสนักศึกษา 9 หลัก เพื่อดูคำใบ้จากพี่รหัสได้เลย
+        <span class="note-highlight" id="noteHighlight">*หมายเหตุ: น้องๆบางคนอาจจะได้คำใบ้มากกว่า 1 คำใบ้เนื่องจากน้องบางคนอาจมีพี่รหัสมากกว่า 1 คน</span>
     </div>
     
     <div class="input-group">
         <input type="text" id="studentId" placeholder="กรอกรหัสนักศึกษา 9 หลัก" maxlength="9" inputmode="numeric">
     </div>
-    <button class="btn-submit" onclick="getHint()">
+    <button class="btn-submit" onclick="checkInputBeforeModal()">
         <span id="btnText">ดูคำใบ้พี่รหัส</span>
     </button>
     
     <div id="result" class="result-box"></div>
 </div>
 
+<div class="modal-overlay" id="noteModal">
+    <div class="modal-box">
+        <div class="modal-title" id="modalTitle">⚠️ หมายเหตุสำคัญ</div>
+        <div class="modal-text" id="modalText">
+            เนื่องจากจำนวนของน้องรหัสมีน้อยกว่าจำนวนของพี่รหัส จึงทำให้น้องๆ บางคนมีพี่รหัสมากกว่า 1 คน และบางกรณีมีการนำนักศึกษาภาคนานาชาติมาสุ่มรวมกับภาคปกติเพื่อให้สามารถจัดสายรหัสได้ครบทุกคน จึงขออภัยในความไม่สะดวกมา ณ ที่นี้
+        </div>
+        <button class="btn-accept" onclick="acceptNote()" id="modalBtn">รับทราบและดูคำใบ้</button>
+    </div>
+</div>
+
 <div class="footer-contact-wrapper">
-    <div class="contact-text-bubble" id="contactText">หากมีปัญหาติดต่อได้ที่</div>
+    <div class="contact-text-bubble" id="contactText">หากมีปัญหาติดต่อได้จากตรงนี้เลย</div>
     <a href="https://www.instagram.com/econcommittee.cmu?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" 
        target="_blank" 
        class="ig-contact-btn" 
@@ -302,7 +378,7 @@
     const translations = {
         th: {
             title: "ระบบค้นหาคำใบ้สายรหัส",
-            subtitle: "ยินดีต้อนรับนักศึกษา ECON 69 เข้าสู่ระบบค้นหาคำใบ้สายรหัส<br>กรอกรหัสนักศึกษา 9 หลัก เพื่อดูคำใบ้จากพี่รหัสได้เลย<span class='note-highlight'>*หมายเหตุ: หากน้องได้รับคำใบ้มากกว่า 1 คำใบ้ หมายความว่าน้องมีพี่รหัสตามจำนวนคำใบ้นั้นๆ</span>",
+            subtitle: "ยินดีต้อนรับน้องๆ ECON 69 เข้าสู่การตามหาคำใบ้สายรหัส<br>กรอกรหัสนักศึกษา 9 หลัก เพื่อดูคำใบ้จากพี่รหัสได้เลย<span class='note-highlight'>*หมายเหตุ: น้องๆบางคนอาจจะได้คำใบ้มากกว่า 1 คำใบ้เนื่องจากน้องบางคนอาจมีพี่รหัสมากกว่า 1 คน</span>",
             placeholder: "กรอกรหัสนักศึกษา 9 หลัก",
             btnText: "ดูคำใบ้พี่รหัส",
             langBtn: "EN",
@@ -311,11 +387,14 @@
             foundSuccess: "พบข้อมูลคำใบ้สายรหัสของคุณแล้ว",
             hintSingle: "คำใบ้จากพี่รหัสของคุณ:",
             hintMultiplePrefix: "คำใบ้จากพี่รหัสคนที่ ",
-            contactText: "หากมีปัญหาติดต่อได้ที่"
+            contactText: "หากมีปัญหาติดต่อได้จากตรงนี้เลย",
+            modalTitle: "⚠️ หมายเหตุสำคัญ",
+            modalText: "เนื่องจากจำนวนของน้องรหัสมีน้อยกว่าจำนวนของพี่รหัส จึงทำให้น้องๆ บางคนมีพี่รหัสมากกว่า 1 คน และบางกรณีมีการนำนักศึกษาภาคนานาชาติมาสุ่มรวมกับภาคปกติเพื่อให้สามารถจัดสายรหัสได้ครบทุกคน จึงขออภัยในความไม่สะดวกมา ณ ที่นี้",
+            modalBtn: "รับทราบและดูคำใบ้"
         },
         en: {
             title: "Mentor Hint Search System",
-            subtitle: "Welcome ECON 69 students to the Mentor Matching System.<br>Enter your 9-digit student ID to see your mentor's hint.<span class='note-highlight'>*Note: If you receive more than 1 hint, it means you have multiple mentors matching that exact number of hints.</span>",
+            subtitle: "Welcome ECON 69 students to the Mentor Matching System.<br>Enter your 9-digit student ID to see your mentor's hint.<span class='note-highlight'>*Note: Some students may receive more than one hint because they might have multiple mentors.</span>",
             placeholder: "Enter your 9-digit student ID",
             btnText: "View Hint",
             langBtn: "TH",
@@ -324,19 +403,22 @@
             foundSuccess: "Your mentor's hint has been found",
             hintSingle: "Your mentor's hint:",
             hintMultiplePrefix: "Hint from mentor ",
-            contactText: "If any issues, contact us at"
+            contactText: "If any issues, contact us at",
+            modalTitle: "⚠️ Important Note",
+            modalText: "Due to the number of freshmen being less than the senior mentors, some students may have more than one mentor. Additionally, in some cases, international program students have been randomly grouped with regular program students to ensure everyone gets matched. We apologize for any inconvenience caused.",
+            modalBtn: "I Understand & View Hint"
         }
     };
 
     const hintData = {
-        "691610007": "Test",
-        "691610387": "Grey",
-        "691610001": ["ชอบคุโรมิ", "ใส่แว่นตัวเล็กๆ"], 
-        "691610002": "ตัวเลข",
-        "691610003": ["สูงกว่า 175", "ชอบเล่นบาส", "ใจดีมาก"],
-        "691610344": ["เตเต้เป็นเกย์", "ชอบคนเก่า"],
-        "691610345": ["ชอบเล่นเกย์", "คิดถึงข้าวฟ่าง"],
-        "691610340": ["ไม่บอก."]
+        "691610002": "Test",
+        "691610003": "Grey",
+        "691610004": ["ชอบคุโรมิ", "ใส่แว่นตัวเล็กๆ"], 
+        "691610005": "ตัวเลข",
+        "691610006": ["สูงกว่า 175", "ชอบเล่นบาส", "ใจดีมาก"],
+        "691610007": ["เตเต้เป็นเกย์", "ชอบคนเก่า"],
+        "691610008": ["ชอบเล่นเกย์", "คิดถึงข้าวฟ่าง"],
+        "691610009": ["ไม่บอก."]
     };
 
     function toggleLanguage() {
@@ -355,6 +437,31 @@
         document.getElementById("btnText").innerText = lang.btnText;
         document.getElementById("langBtn").innerText = lang.langBtn;
         document.getElementById("contactText").innerText = lang.contactText;
+        
+        document.getElementById("modalTitle").innerText = lang.modalTitle;
+        document.getElementById("modalText").innerText = lang.modalText;
+        document.getElementById("modalBtn").innerText = lang.modalBtn;
+    }
+
+    function checkInputBeforeModal() {
+        const idInput = document.getElementById("studentId").value.trim();
+        const resultBox = document.getElementById("result");
+        const lang = translations[currentLang];
+
+        if (idInput === "") {
+            resultBox.style.display = "none";
+            resultBox.className = "result-box error";
+            resultBox.innerText = lang.emptyError;
+            resultBox.style.display = "block";
+            return;
+        }
+
+        document.getElementById("noteModal").classList.add("active");
+    }
+
+    function acceptNote() {
+        document.getElementById("noteModal").classList.remove("active");
+        getHint();
     }
 
     function getHint() {
@@ -364,13 +471,6 @@
         
         resultBox.style.display = "none";
         resultBox.className = "result-box";
-
-        if (idInput === "") {
-            resultBox.innerText = lang.emptyError;
-            resultBox.classList.add("error");
-            resultBox.style.display = "block";
-            return;
-        }
 
         const data = hintData[idInput];
 
@@ -412,7 +512,7 @@
         
         if (idParam) {
             document.getElementById("studentId").value = idParam;
-            getHint();
+            checkInputBeforeModal();
         }
     }
 </script>
